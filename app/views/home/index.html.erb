@@ -1,9 +1,4 @@
-<h3>Home</h3>
-<% @users.each do |user| %>
-  <p>User: <%=link_to user.name, user %></p>
-<% end %>
-
-<h2>Listing entries</h2>
+<h3>All Tsiki Entries</h3>
 
 <%= render 'entries/list' %>
 

@@ -12,4 +12,10 @@ module ApplicationHelper
     html.html_safe
   end
 
+  # Method to convert markdown text to HTML
+  def render_markdown(text)
+      markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(:no_links => true, :hard_wrap => true), :autolink => true, :space_after_hearders => true)
+      markdown.render(text).html_safe
+  end
+
 end

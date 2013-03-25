@@ -1,19 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
+<h3>
   <%= @entry.title %>
-</p>
-
-<p>
-  <b>Body:</b>
-  <%= @entry.body %>
-</p>
-
+</h3>
 <p>
   <b>Original Author:</b>
   <%= @entry.user.name %>
+  <br />
+  <b>Date:</b>
+  <%= @entry.user.created_at.to_date %> 
+
+  <% if @entry.user.created_at.to_date != @entry.user.updated_at.to_date %>
+  	 | <b>Updated:</b>
+  	<%= @entry.user.updated_at.to_date %>
+   <% end %>
 </p>
+
+
+<p>
+  <%= render_markdown(@entry.body) %>
+</p>
+
 
 
 <%= link_to 'Edit', edit_entry_path(@entry) %> |
