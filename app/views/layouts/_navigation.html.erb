@@ -2,7 +2,9 @@
 <ul class="nav">
 
   <li>
-    <%= link_to 'Wiki Entries', entries_path %>
+    <% if user_signed_in? %>
+      <%= link_to 'My Entries', entries_path %>
+    <% end %>
   </li>
 
   <% if user_signed_in? %>
