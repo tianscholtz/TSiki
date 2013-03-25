@@ -24,8 +24,16 @@ class UsersController < ApplicationController
     authorize! :destroy, @user, :message => 'Not authorized as an administrator.'
     user = User.find(params[:id])
     unless user == current_user
+
+      # Delete all user's posts before deleting user
+      @entries = user.entries
+      for entry in @entries
+        entry.destroy
+      end
+
       user.destroy
       redirect_to users_path, :notice => "User deleted."
+  
     else
       redirect_to users_path, :notice => "Can't delete yourself."
     end
