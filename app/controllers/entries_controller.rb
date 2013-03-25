@@ -75,11 +75,25 @@ class EntriesController < ApplicationController
   # DELETE /entries/1.json
   def destroy
     @entry = Entry.find(params[:id])
-    @entry.destroy
+    #@entry.destroy
 
+    # Only delete entry if entry belongs to current user or current user is an admin
     respond_to do |format|
-      format.html { redirect_to entries_url }
-      format.json { head :no_content }
+      if @entry.user == current_user or current_user.has_role? :admin
+
+        
+        if @entry.destroy
+          format.html { redirect_to entries_url, notice: 'Entry was successfully deleted.' }
+          format.json { head :no_content }
+        end
+      else
+        
+      end
     end
+
+    #respond_to do |format|
+    #  format.html { redirect_to entries_url }
+    #  format.json { head :no_content }
+    #end
   end
 end
