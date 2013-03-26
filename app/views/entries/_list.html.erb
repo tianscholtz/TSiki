@@ -1,18 +1,18 @@
 <table>
 
 <% @entries.each do |entry| %>
-  
-
 
     <tr>
-      
-
+    
       <td><h4><%= link_to truncate(entry.title, :length => 50, :separator => ' '), entry %></h4>
-      <%= truncate(entry.body, :length => 100, :separator => ' ') %> <hr /></td>
+      <%= truncate(entry.body, :length => 100, :separator => ' ') %> 
+      <% if current_user.has_role? :admin %>
+      	<br /><%= link_to 'Delete', entry, method: :delete, data: { confirm: 'Are you sure you want to delete this entry?' } %>
+      <% end %>
+      <hr /></td>
       <td> <b>Author: </b> <%= entry.user.name %> <br />
         <b> Date: </b> <%= entry.created_at.to_date %> </td>
-      
-      
+          
     </tr>
 
 

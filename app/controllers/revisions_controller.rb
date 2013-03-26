@@ -1,6 +1,9 @@
 class RevisionsController < ApplicationController
   # GET /revisions
   # GET /revisions.json
+
+  # Edit and update methods are commented out to prevent changes to the history
+
   def index
     @revisions = Revision.all
 
@@ -34,7 +37,7 @@ class RevisionsController < ApplicationController
 
   # GET /revisions/1/edit
   def edit
-    @revision = Revision.find(params[:id])
+   # @revision = Revision.find(params[:id])
   end
 
   # POST /revisions
@@ -56,17 +59,17 @@ class RevisionsController < ApplicationController
   # PUT /revisions/1
   # PUT /revisions/1.json
   def update
-    @revision = Revision.find(params[:id])
+   # @revision = Revision.find(params[:id])
 
-    respond_to do |format|
-      if @revision.update_attributes(params[:revision])
-        format.html { redirect_to @revision, notice: 'Revision was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @revision.errors, status: :unprocessable_entity }
-      end
-    end
+   # respond_to do |format|
+    #  if @revision.update_attributes(params[:revision])
+    #    format.html { redirect_to @revision, notice: 'Revision was successfully updated.' }
+     #   format.json { head :no_content }
+      #else
+       # format.html { render action: "edit" }
+        #format.json { render json: @revision.errors, status: :unprocessable_entity }
+      #end
+    #end
   end
 
   # DELETE /revisions/1
@@ -74,7 +77,7 @@ class RevisionsController < ApplicationController
   def destroy
     @revision = Revision.find(params[:id])
     @revision.destroy
-
+ 
     respond_to do |format|
       format.html { redirect_to revisions_url }
       format.json { head :no_content }

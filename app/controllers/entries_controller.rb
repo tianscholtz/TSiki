@@ -97,10 +97,19 @@ class EntriesController < ApplicationController
           revision.destroy
         end
         
-        if @entry.destroy
-          format.html { redirect_to entries_url, notice: 'Entry was successfully deleted.' }
-          format.json { head :no_content }
+        if @entry.user == current_user
+          if @entry.destroy
+            format.html { redirect_to entries_url, notice: 'Entry was successfully deleted.' }
+            format.json { head :no_content }
+          end
+        elsif current_user.has_role? :admin
+          if @entry.destroy
+            format.html { redirect_to root_path, notice: 'Entry was successfully deleted.' }
+            format.json { head :no_content }
+          end
         end
+
+
       else
         
       end
