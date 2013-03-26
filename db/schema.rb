@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130325075124) do
+ActiveRecord::Schema.define(:version => 20130325234435) do
 
   create_table "entries", :force => true do |t|
     t.string   "title"
@@ -22,6 +22,19 @@ ActiveRecord::Schema.define(:version => 20130325075124) do
   end
 
   add_index "entries", ["user_id"], :name => "index_entries_on_user_id"
+
+  create_table "revisions", :force => true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.integer  "entry_id"
+    t.integer  "user_id"
+    t.string   "editor"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "revisions", ["entry_id"], :name => "index_revisions_on_entry_id"
+  add_index "revisions", ["user_id"], :name => "index_revisions_on_user_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"

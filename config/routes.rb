@@ -1,4 +1,7 @@
 TSiki::Application.routes.draw do
+  resources :revisions
+
+
   resources :entries
 
 

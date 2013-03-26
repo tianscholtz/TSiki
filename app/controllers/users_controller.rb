@@ -30,6 +30,11 @@ class UsersController < ApplicationController
       for entry in @entries
         entry.destroy
       end
+      @revisions = user.revisions
+      for revision in @revisions
+        revision.user = nil
+        revision.save
+      end
 
       user.destroy
       redirect_to users_path, :notice => "User deleted."

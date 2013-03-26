@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<h3>
+  <%= @revision.title %>
+</h3>
+<p>
+  <b> Revision Author: </b>
+  <%= @revision.editor %>
+  <br />
+  <b>Revision Date:</b>
+  <%= @revision.created_at.to_date %> 
+
+</p>
+
+<hr />
+<p>
+  <%= render_markdown(@revision.body) %>
+</p>
+<hr />
+
+
+
+<%= link_to 'Home', root_path %>

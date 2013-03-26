@@ -1,0 +1,15 @@
+<%= simple_form_for(@revision) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :title %>
+    <%= f.input :body %>
+    <%= f.association :entry %>
+    <%= f.association :user %>
+    <%= f.input :editor %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

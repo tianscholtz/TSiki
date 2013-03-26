@@ -1,21 +1,16 @@
 <table>
-  <tr>
-    <th>Title</th>
-    <th></th>
-    <th>Author</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
 <% @entries.each do |entry| %>
   
 
 
     <tr>
-      <td><%= link_to entry.title, entry %></td>
-      <td><%= truncate(entry.body, :length => 60, :separator => ' ') %></td>
-      <td><%= entry.user.name %></td>
+      
+
+      <td><h4><%= link_to truncate(entry.title, :length => 50, :separator => ' '), entry %></h4>
+      <%= truncate(entry.body, :length => 100, :separator => ' ') %> <hr /></td>
+      <td> <b>Author: </b> <%= entry.user.name %> <br />
+        <b> Date: </b> <%= entry.created_at.to_date %> </td>
       
       
     </tr>

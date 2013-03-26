@@ -8,19 +8,19 @@
   <%= @entry.user.name %>
   <br />
   <b>Date:</b>
-  <%= @entry.user.created_at.to_date %> 
+  <%= @entry.created_at.to_date %> 
 
-  <% if @entry.user.created_at.to_date != @entry.user.updated_at.to_date %>
+  <% if @entry.created_at != @entry.updated_at %>
   	 | <b>Updated:</b>
-  	<%= @entry.user.updated_at.to_date %>
+  	<%= @entry.updated_at.to_date %>
    <% end %>
 </p>
 
-
+<hr />
 <p>
   <%= render_markdown(@entry.body) %>
 </p>
-
+<hr />
 
 
 <%= link_to 'Edit', edit_entry_path(@entry) %> |
@@ -31,5 +31,25 @@
 	<% end %>
 <% end %>
 
-<%= link_to 'Home', root_path %> |
-<%= link_to 'My Entries', entries_path %>
+<%= link_to 'Home', root_path %> 
+<% if user_signed_in? %>
+  | <%= link_to 'My Entries', entries_path %>
+<% end %>
+
+<hr />
+
+<h5>Available Revisions</h5>
+<table>
+
+<% @revisions.each do |revision| %>
+  
+  <% if revision.entry == @entry %>
+
+    <tr>
+      <td><%= link_to revision.created_at, revision %></td>
+
+    </tr>
+
+  <% end %>
+<% end %>
+</table>
