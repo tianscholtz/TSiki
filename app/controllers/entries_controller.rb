@@ -42,19 +42,22 @@ class EntriesController < ApplicationController
   # POST /entries
   # POST /entries.json
   def create
-    @entry = Entry.new(params[:entry])
 
-    @entry.user = current_user
+    if user_signed_in?
+      @entry = Entry.new(params[:entry])
 
-    respond_to do |format|
-      if @entry.save
-        format.html { redirect_to @entry, notice: 'Entry was successfully created.' }
-        format.json { render json: @entry, status: :created, location: @entry }
-        # Save a copy of the new file
-        Revision.create(:title => @entry.title , :body => @entry.body, :entry => @entry, :editor => current_user.name, :user => current_user)
-      else
-        format.html { render action: "new" }
-        format.json { render json: @entry.errors, status: :unprocessable_entity }
+      @entry.user = current_user
+
+      respond_to do |format|
+        if @entry.save
+          format.html { redirect_to @entry, notice: 'Entry was successfully created.' }
+          format.json { render json: @entry, status: :created, location: @entry }
+          # Save a copy of the new file
+          Revision.create(:title => @entry.title , :body => @entry.body, :entry => @entry, :editor => current_user.name, :user => current_user)
+        else
+          format.html { render action: "new" }
+          format.json { render json: @entry.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -84,34 +87,37 @@ class EntriesController < ApplicationController
   # DELETE /entries/1
   # DELETE /entries/1.json
   def destroy
-    @entry = Entry.find(params[:id])
-    #@entry.destroy
 
-    # Only delete entry if entry belongs to current user or current user is an admin
-    respond_to do |format|
-      if @entry.user == current_user or current_user.has_role? :admin
+    if user_signed_in?
+      @entry = Entry.find(params[:id])
+      #@entry.destroy
 
-        # Delete all revisions of an entry before deleting entry
-        @revisions = @entry.revisions
-        for revision in @revisions
-          revision.destroy
-        end
-        
-        if @entry.user == current_user
-          if @entry.destroy
-            format.html { redirect_to entries_url, notice: 'Entry was successfully deleted.' }
-            format.json { head :no_content }
+      # Only delete entry if entry belongs to current user or current user is an admin
+      respond_to do |format|
+        if @entry.user == current_user or current_user.has_role? :admin
+
+          # Delete all revisions of an entry before deleting entry
+          @revisions = @entry.revisions
+          for revision in @revisions
+            revision.destroy
           end
-        elsif current_user.has_role? :admin
-          if @entry.destroy
-            format.html { redirect_to root_path, notice: 'Entry was successfully deleted.' }
-            format.json { head :no_content }
+          
+          if @entry.user == current_user
+            if @entry.destroy
+              format.html { redirect_to entries_url, notice: 'Entry was successfully deleted.' }
+              format.json { head :no_content }
+            end
+          elsif current_user.has_role? :admin
+            if @entry.destroy
+              format.html { redirect_to root_path, notice: 'Entry was successfully deleted.' }
+              format.json { head :no_content }
+            end
           end
+
+
+        else
+          
         end
-
-
-      else
-        
       end
     end
 
